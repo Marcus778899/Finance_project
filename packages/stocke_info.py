@@ -1,6 +1,5 @@
 from FinMind.data import DataLoader
 from FinMind_token import token
-import pandas as pd
 
 api = DataLoader()
 api.login_by_token(api_token=token)
