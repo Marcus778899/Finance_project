@@ -1,6 +1,6 @@
 from FinMind.data import DataLoader
 import pandas as pd
-from .FinMind_token import token
+from .secret import token
 
 class scrapingStockInformation():
     def __init__(self):

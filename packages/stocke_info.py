@@ -1,5 +1,5 @@
 from FinMind.data import DataLoader
-from FinMind_token import token
+from finace_project.packages.secret import token
 
 api = DataLoader()
 api.login_by_token(api_token=token)
