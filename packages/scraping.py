@@ -21,7 +21,7 @@ class scrapingStockInformation():
             except Exception as e:
                     print(f"Error scraping data for stock {number} : {e}")
                     break
-            print(f'start download{number}.csv')
+            print(f'start download : {number}.csv')
             dataset.to_csv(f'./dataset/{number}.csv')
             print(f'{number} stock scraping done')
             print('='* 25)
