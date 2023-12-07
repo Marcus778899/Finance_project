@@ -2,11 +2,11 @@ import pymysql
 from packages import secret
 
 class mysql_import():
-    def __init__(self,database) -> None:
+    def __init__(self) -> str:
         self.user = secret.user
         self.password = secret.password
         self.host = secret.host
-        self.database = database
+        self.database = secret.database
 
     def create_database(self):
         connection = pymysql.connect(
@@ -33,7 +33,7 @@ class mysql_import():
         finally:
             connection.close()
 
-    def import_data(self,table):
+    def create_table(self,table):
         connection = pymysql.connect(
             host=secret.host,
             user=secret.user,
@@ -44,11 +44,14 @@ class mysql_import():
 
         try:
             with connection.cursor() as cursor:
-                sql = f'CREATE TABLE IF NOT EXISTS {table}'   
+                sql = f'CREATE TABLE IF NOT EXISTS {table} (date DATE,stock_id VARCHAR(20),Trading_Volume INT,Trading_money INT,open DECIMAL(10, 2),max DECIMAL(10, 2),min DECIMAL(10, 2),close DECIMAL(10, 2),spread DECIMAL(10, 2),Trading_turnover INT) '  
+                cursor.execute(sql)
+                connection.commit() 
 
         except Exception as e:
             print(f"Error importing data: {e}")
 
         finally:
             connection.close()
+
 
