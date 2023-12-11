@@ -1,5 +1,5 @@
 import pymysql
-from packages import secret
+from secret import secret
 
 class mysql_import():
     def __init__(self) -> str:
@@ -44,7 +44,9 @@ class mysql_import():
 
         try:
             with connection.cursor() as cursor:
-                sql = f'CREATE TABLE IF NOT EXISTS {table} (date DATE,stock_id VARCHAR(20),Trading_Volume INT,Trading_money INT,open DECIMAL(10, 2),max DECIMAL(10, 2),min DECIMAL(10, 2),close DECIMAL(10, 2),spread DECIMAL(10, 2),Trading_turnover INT) '  
+                sql = f'CREATE TABLE IF NOT EXISTS {table} (date DATE,stock_id VARCHAR(20), \
+                        Trading_Volume INT,Trading_money INT,open DECIMAL(10, 2),max DECIMAL(10, 2), \
+                        min DECIMAL(10, 2),close DECIMAL(10, 2),spread DECIMAL(10, 2),Trading_turnover INT) '  
                 cursor.execute(sql)
                 connection.commit() 
 
