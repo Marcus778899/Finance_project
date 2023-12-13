@@ -3,3 +3,4 @@ chromedriver-linux64
 __pycache__
 .venv
 dataset
+test.py

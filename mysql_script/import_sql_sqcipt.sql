@@ -1,4 +1,5 @@
 show databases;
+create database finace;
 use finace;
 show tables;
 CREATE TABLE IF NOT EXISTS stock (
@@ -18,4 +19,9 @@ ALTER TABLE stock MODIFY COLUMN Trading_money bigint;
 LOAD DATA INFILE '/var/lib/mysql-files/0050.csv' INTO TABLE stock
 FIELDS TERMINATED BY ',' ENCLOSED BY '"' LINES TERMINATED BY '\n' ignore 1 lines;
 show warnings;
-select * from stock;
+show columns from stock;
+SELECT COUNT(*) AS column_count
+FROM information_schema.columns
+WHERE table_schema = 'finace' AND table_name = 'stock';
+select * from stock order by date_time,stock_id;
+
