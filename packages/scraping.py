@@ -9,14 +9,14 @@ class scrapingStockInformation():
         self.end_date = '2023-11-30'
         self.api = DataLoader()
         self.stock_info = pd.read_csv('./stock_info.csv')['stock_id'].tolist()
-        self.stock_list = list(set(self.stock_info) - set(stock_finish()))
         self.token = secret.token
 
     # price of stock
-    def scraping_stock_price(self):
+    def scraping_stock_price(self,path_name:str):
+        stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
         self.api.login_by_token(api_token=self.token)
         download_list = []
-        for number in self.stock_list:
+        for number in stock_list:
             print(f'start download : {number}.csv')
             try:
                 dataset = self.api.taiwan_stock_daily(number, self.start_date , self.end_date)
@@ -30,10 +30,11 @@ class scrapingStockInformation():
         return download_list
 
     # some indicator need to add into data(not finish)
-    def scraping_stock_value_indicator(self):
+    def scraping_stock_value_indicator(self,path_name:str):
+        stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
         self.api.login_by_token(api_token=self.token)
         download_list = []
-        for number in self.stock_list:
+        for number in stock_list:
             print(f'start download : {number}.csv')
             try:
                  dataset = self.api.taiwan_stock_per_pbr(number, self.start_date , self.end_date)
