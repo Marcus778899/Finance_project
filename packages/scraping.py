@@ -12,7 +12,10 @@ class scrapingStockInformation():
         self.token = secret.token
 
     # price of stock
-    def scraping_stock_price(self,path_name:str):
+    def scraping_stock_price(self,path_name:str) -> list:
+        '''
+        :param stock_price path_name output location,format is str
+        '''
         stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
         self.api.login_by_token(api_token=self.token)
         download_list = []
@@ -30,7 +33,10 @@ class scrapingStockInformation():
         return download_list
 
     # some indicator need to add into data(not finish)
-    def scraping_stock_value_indicator(self,path_name:str):
+    def scraping_stock_value_indicator(self,path_name:str) -> list:
+        '''
+        :param stock_value path_name output location,format is str
+        '''
         stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
         self.api.login_by_token(api_token=self.token)
         download_list = []
