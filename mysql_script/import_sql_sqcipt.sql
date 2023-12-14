@@ -15,6 +15,12 @@ close_price DECIMAL(10, 2),
 spread DECIMAL(10, 2),
 Trading_turnover INT) ; 
 create table if not exists stock_value (
+date_time DATE,
+stock_id varchar(20),
+dividend_yield decimal(10,2),
+PER decimal(10,2),
+PBR decimal(10, 2)
+);
 
 -- 查詢mysql系統參數
 show variables like 'secure_file_priv';
@@ -23,6 +29,14 @@ set global local_infile = 'ON';
 
 -- 變更資料結構
 ALTER TABLE stock MODIFY COLUMN Trading_money bigint;
+
+-- 聯合主鍵(好用)
+ALTER TABLE stock_price
+ADD PRIMARY KEY (date_time, stock_id);
+ALTER TABLE stock_value
+ADD PRIMARY KEY (date_time, stock_id);
+
+
 
 -- 匯入資料(太慢了，利用終端機比較快)
 LOAD DATA INFILE '/var/lib/mysql-files/0050.csv' INTO TABLE stock
@@ -42,4 +56,10 @@ select * from stock_price limit 10 offset 0;
 select * from stock_price limit 10 offset 10;
 
 select count(*) as row_numbers from stock_price;
+select count(*) as row_numbers from stock_value;
+select * from stock_price
+join stock_value 
+on stock_price.stock_id = stock_value.stock_id 
+and stock_price.date_time = stock_value.date_time
+limit 10;
 
