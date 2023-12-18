@@ -104,6 +104,7 @@ class scrapingStockInformation():
             print('='* 25)
         print('DONE')
 
+    # cashflow statement
     def scraping_cashflow_statement(self,path_name:str):
         '''
         :param cashflow_statement path_name output location,format is str
@@ -123,3 +124,28 @@ class scrapingStockInformation():
                  break 
             dataset.to_csv(f'./dataset/cashflow_statement/{number}.csv',index=False)
             print(f'{number} stock scraping done')
+            print('='* 25)
+        print('DONE')
+
+    # scraping_margin_purchase
+    def scraping_margin_purchase(self,path_name:str):
+        '''
+        :param margin_purchase path_name output location,format is str
+        '''
+        folder_name = os.path.join(f'./dataset/{path_name}')
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
+        self.api.login_by_token(api_token=self.token)
+        for number in stock_list:
+            print(f'start download : {number}.csv')
+            try:
+                 dataset = self.api.taiwan_stock_margin_purchase_short_sale(number, self.start_date , self.end_date)
+            except Exception as e:
+                 print(f"Error scraping data for stock {number} : {e}")
+                 break 
+            dataset.to_csv(f'./dataset/margin_purchase/{number}.csv',index=False)
+            print(f'{number} stock scraping done')
+            print('='* 25)
+        print('DONE')
