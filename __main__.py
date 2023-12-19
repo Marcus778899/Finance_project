@@ -8,4 +8,5 @@ if __name__ == "__main__":
     # action.scraping_financial_statements('financial_statements')
     # action.scraping_balance_sheet('balance_sheet')
     # action.scraping_cashflow_statement('cashflow_statement')
-    action.scraping_margin_purchase('margin_purchase')
+    # action.scraping_margin_purchase('margin_purchase')
+    action.scraping_TaiwanStockInstitutionalInvestorsBuySell('InstitutionalInvestorsBuySell')

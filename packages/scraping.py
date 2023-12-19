@@ -30,7 +30,7 @@ class scrapingStockInformation():
             except Exception as e:
                     print(f"Error scraping data for stock {number} : {e}")
                     break
-            dataset.to_csv(f'./dataset/stock_price/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
@@ -53,7 +53,7 @@ class scrapingStockInformation():
             except Exception as e:
                  print(f"Error scraping data for stock {number} : {e}")
                  break 
-            dataset.to_csv(f'./dataset/stock_value/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
@@ -76,7 +76,7 @@ class scrapingStockInformation():
             except Exception as e:
                  print(f"Error scraping data for stock {number} : {e}")
                  break 
-            dataset.to_csv(f'./dataset/financial_statements/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
@@ -99,7 +99,7 @@ class scrapingStockInformation():
             except Exception as e:
                  print(f"Error scraping data for stock {number} : {e}")
                  break 
-            dataset.to_csv(f'./dataset/balance_sheet/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
@@ -122,7 +122,7 @@ class scrapingStockInformation():
             except Exception as e:
                  print(f"Error scraping data for stock {number} : {e}")
                  break 
-            dataset.to_csv(f'./dataset/cashflow_statement/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
@@ -145,7 +145,30 @@ class scrapingStockInformation():
             except Exception as e:
                  print(f"Error scraping data for stock {number} : {e}")
                  break 
-            dataset.to_csv(f'./dataset/margin_purchase/{number}.csv',index=False)
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
+            print(f'{number} stock scraping done')
+            print('='* 25)
+        print('DONE')
+
+    # scraping TaiwanStockInstitutionalInvestorsBuySell
+    def scraping_TaiwanStockInstitutionalInvestorsBuySell(self,path_name:str):
+        '''
+        :param TaiwanStockInstitutionalInvestorsBuySell path_name output location,format is str
+        '''
+        folder_name = os.path.join(f'./dataset/{path_name}')
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+
+        stock_list = list(set(self.stock_info) - set(stock_finish(path_name)))
+        self.api.login_by_token(api_token=self.token)
+        for number in stock_list:
+            print(f'start download : {number}.csv')
+            try:
+                 dataset = self.api.taiwan_stock_institutional_investors(number, self.start_date , self.end_date)
+            except Exception as e:
+                 print(f"Error scraping data for stock {number} : {e}")
+                 break 
+            dataset.to_csv(f'./dataset/{path_name}/{number}.csv',index=False)
             print(f'{number} stock scraping done')
             print('='* 25)
         print('DONE')
